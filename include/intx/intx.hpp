@@ -8,7 +8,6 @@
 #include <bit>
 #include <cassert>
 #include <climits>
-#include <concepts>
 #include <cstdint>
 #include <cstring>
 #include <limits>
@@ -512,8 +511,8 @@ inline constexpr uint128& operator>>=(uint128& x, uint64_t shift) noexcept
 }
 
 /// @}
-
-inline constexpr unsigned clz(std::unsigned_integral auto x) noexcept
+template <typename T, std::enable_if_t<std::is_integral_v<T> && !std::is_signed_v<T>, int> = 1>
+inline constexpr unsigned clz(T x) noexcept
 {
     return static_cast<unsigned>(std::countl_zero(x));
 }
